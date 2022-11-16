@@ -47,14 +47,28 @@ const userController = {
 	//User liked product
 	likedProductList: async (req, res) => {
 		try {
-			const product = await Product.findById(req.params.productId);
 			if (req.params.userId) {
-				const user = await Users.findById(req.params.userId);
-				await user.updateOne({ $push: { wishListIds: product._id } });
+				const user = await Users.find({
+					_id: req.params.userId,
+					wishListIds: req.params.productId
+				});
+
+				if (!user.length) {
+					await Users.findOneAndUpdate(
+						{ _id: req.params.userId },
+						{ $push: { wishListIds: req.params.productId } }
+					);
+					const user = await Users.findOne({
+						_id: req.params.userId
+					});
+					return res.status(200).json({ message: 'Liked Successfully', user });
+				}
+				return res.status(200).json({ message: 'Already Loved' });
 			}
-			res.status(200).json({ message: 'Liked Successfully' });
 		} catch (err) {
-			res.status(500).json(err);
+			return res.status(400).json({
+				message: err.message
+			});
 		}
 	},
 

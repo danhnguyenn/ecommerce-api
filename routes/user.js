@@ -19,7 +19,7 @@ router.delete(
 router.get('/get-address/:id', userController.getUserSingleAddress);
 
 //Get Product Liked
-router.get(
+router.put(
 	'/liked-product/:userId/:productId',
 	userController.likedProductList
 );

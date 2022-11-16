@@ -66,12 +66,20 @@ const productController = {
 			}
 			const skip = (page - 1) * 5;
 			if (categories) {
-				filter = { category: categories };
+				filter = {
+					...filter,
+					category: categories
+				};
 				count = await Product.count(filter);
-			} else if (brands) {
-				filter = { brand: brands.split(',') };
+			}
+			if (brands) {
+				filter = {
+					...filter,
+					brand: brands.split(',')
+				};
 				count = await Product.count(filter);
-			} else if (search) {
+			}
+			if (search) {
 				filter = search
 					? {
 							title: {
@@ -81,15 +89,16 @@ const productController = {
 					  }
 					: {};
 				count = await Product.count(filter);
-			} else if (salePrice_gte > 0 && salePrice_gte > 0) {
+			}
+			if (salePrice_gte > 0 && salePrice_gte > 0) {
 				salePrice_gte = parseInt(salePrice_gte);
 				salePrice_lte = parseInt(salePrice_lte);
 				filter = {
+					...filter,
 					newPrice: { $gte: salePrice_gte, $lte: salePrice_lte }
 				};
 				count = await Product.count(filter);
 			}
-
 			const products = await Product.find(filter)
 				.sort({ createdAt: 'asc' })
 				.skip(skip)
