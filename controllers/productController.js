@@ -82,6 +82,7 @@ const productController = {
 			if (search) {
 				filter = search
 					? {
+							...filter,
 							title: {
 								$regex: search,
 								$options: 'i'
@@ -99,6 +100,7 @@ const productController = {
 				};
 				count = await Product.count(filter);
 			}
+			console.log(filter);
 			const products = await Product.find(filter)
 				.sort({ createdAt: 'asc' })
 				.skip(skip)
