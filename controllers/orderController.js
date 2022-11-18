@@ -23,7 +23,8 @@ const orderController = {
 				populate: {
 					path: 'product'
 				}
-			});
+			})
+			.sort({ createdAt: 'desc' });
 		if (!order) {
 			return res.status(404).json({ message: 'Order Not Found' });
 		}
