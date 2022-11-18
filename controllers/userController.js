@@ -26,7 +26,8 @@ const userController = {
 		try {
 			const user = await Users.findById(req.params.id)
 				.select('-passwordHash')
-				.populate('addressList');
+				.populate('addressList')
+				.sort({ createdAt: 'desc' });
 			res.status(200).json({ message: 'Get Successfully', user });
 		} catch (err) {
 			res.status(500).json(err);
