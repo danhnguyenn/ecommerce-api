@@ -30,8 +30,9 @@ const addressController = {
 	updateAddress: async (req, res) => {
 		try {
 			const address = await Address.findById(req.params.id);
+			console.log(address);
 			await address.updateOne({ $set: req.body });
-			res.status(200).json({ message: 'Updated Successfully' });
+			res.status(200).json({ message: 'Edit Successfully', address });
 		} catch (err) {
 			res.status(500).json(err);
 		}
