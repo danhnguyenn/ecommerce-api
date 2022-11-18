@@ -27,6 +27,15 @@ const addressController = {
 			res.status(500).json(err);
 		}
 	},
+	updateAddress: async (req, res) => {
+		try {
+			const address = await Address.findById(req.params.id);
+			await address.updateOne({ $set: req.body });
+			res.status(200).json({ message: 'Updated Successfully' });
+		} catch (err) {
+			res.status(500).json(err);
+		}
+	},
 	deleleAddress: async (req, res) => {
 		await Users.updateMany(
 			{ addressList: req.params.id },

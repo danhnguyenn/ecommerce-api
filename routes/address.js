@@ -8,6 +8,9 @@ const router = require('express').Router();
 //Add address
 router.post('/', addressController.addAddress);
 
+//Update Address
+router.patch('/:id', addressController.updateAddress);
+
 //Delete address
 router.delete('/:id', addressController.deleleAddress);
 
