@@ -6,27 +6,33 @@ const authController = {
 	//REGISTER
 	register: async (req, res) => {
 		try {
-			const salt = await bcrypt.genSalt(10);
-			const hashed = await bcrypt.hash(req.body.password, salt);
+			const user = await Users.findOne({ email: req.body.email });
 
-			const user = new Users({
-				fullName: req.body.fullName,
-				email: req.body.email,
-				phone: req.body.phone,
-				passwordHash: hashed
-			});
-			const refreshToken = authController.generateRefreshToken(user);
-			user.refreshToken = refreshToken;
+			if (user) {
+				return res.status(500).json({ message: 'Email already exist' });
+			} else {
+				const salt = await bcrypt.genSalt(10);
+				const hashed = await bcrypt.hash(req.body.password, salt);
 
-			await user.save();
-			const token = authController.generateAccessToken(user);
+				const user = new Users({
+					fullName: req.body.fullName,
+					email: req.body.email,
+					phone: req.body.phone,
+					passwordHash: hashed
+				});
+				const refreshToken = authController.generateRefreshToken(user);
+				user.refreshToken = refreshToken;
 
-			res.status(200).json({
-				message: 'Register Successfully',
-				user,
-				token,
-				refreshToken
-			});
+				await user.save();
+				const token = authController.generateAccessToken(user);
+
+				res.status(200).json({
+					message: 'Register Successfully',
+					user,
+					token,
+					refreshToken
+				});
+			}
 		} catch (err) {
 			return res.status(400).json({
 				message: err.message
