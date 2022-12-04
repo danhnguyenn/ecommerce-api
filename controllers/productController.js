@@ -64,7 +64,8 @@ const productController = {
 			} else {
 				limit = parseInt(limit);
 			}
-			const skip = (page - 1) * 5;
+			const skip = (page - 1) * 12;
+
 			if (categories) {
 				filter = {
 					...filter,
@@ -100,7 +101,6 @@ const productController = {
 				};
 				count = await Product.count(filter);
 			}
-			console.log(filter);
 			const products = await Product.find(filter)
 				.sort({ createdAt: 'asc' })
 				.skip(skip)
