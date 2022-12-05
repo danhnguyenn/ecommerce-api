@@ -27,7 +27,7 @@ app.use(cookies());
 
 const cors = require('cors');
 const corsOptions = {
-	origin: 'http://localhost:3000',
+	origin: 'https://ecommerce-oslo.vercel.app',
 	credentials: true, //access-control-allow-credentials:true
 	optionSuccessStatus: 200
 };
