@@ -26,12 +26,12 @@ mongoose
 app.use(cookies());
 
 const cors = require('cors');
-const corsOptions = {
-	origin: 'https://ecommerce-oslo.vercel.app',
-	credentials: true, //access-control-allow-credentials:true
-	optionSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+// 	origin: 'https://ecommerce-oslo.vercel.app',
+// 	credentials: true, //access-control-allow-credentials:true
+// 	optionSuccessStatus: 200
+// };
+app.use(cors());
 
 app.use(express.json());
 app.use('/api/auth', authRoute);
