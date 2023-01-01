@@ -9,6 +9,7 @@ const categoryRoute = require('./routes/category');
 const orderRoute = require('./routes/order');
 const brandRoute = require('./routes/brand');
 const addressRoute = require('./routes/address');
+const welcomeRoute = require('./routes/welcome');
 const cookies = require('cookie-parser');
 const path = require('path');
 dotenv.config();
@@ -34,6 +35,7 @@ const cors = require('cors');
 app.use(cors());
 
 app.use(express.json());
+app.use('/api', welcomeRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
 app.use('/api/products', productRoute);
